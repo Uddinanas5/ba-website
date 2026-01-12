@@ -105,8 +105,7 @@ function Hero() {
           playsInline
           poster="/images/citywalk/interior1.jpg"
         >
-          <source src="/hero-video.mov" type="video/quicktime" />
-          <source src="/hero-video.mov" type="video/mp4" />
+          <source src="/hero-video.mp4" type="video/mp4" />
         </video>
         <div className="hero-video-overlay" />
 
