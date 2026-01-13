@@ -236,6 +236,22 @@
   opacity: 0.2;
 }
 
+@media (max-width: 768px) {
+  .hero-glow-1 {
+    width: 300px;
+    height: 300px;
+    right: -100px;
+    top: -100px;
+  }
+
+  .hero-glow-2 {
+    width: 200px;
+    height: 200px;
+    left: -50px;
+    bottom: -50px;
+  }
+}
+
 .hero-content {
   position: relative;
   z-index: 10;
@@ -405,6 +421,7 @@
 .about {
   background: var(--black);
   padding: 8rem 2rem;
+  overflow-x: hidden;
 }
 
 .about-grid {
@@ -503,6 +520,15 @@
   z-index: -1;
 }
 
+@media (max-width: 768px) {
+  .about-image-accent {
+    right: 0;
+    bottom: -10px;
+    left: 10px;
+    top: 10px;
+  }
+}
+
 @media (max-width: 968px) {
   .about-grid {
     grid-template-columns: 1fr;
@@ -545,7 +571,7 @@
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 1.5rem;
   position: relative;
   z-index: 1;
@@ -633,7 +659,7 @@
 
 .locations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
   gap: 2rem;
 }
 
