@@ -1,0 +1,15 @@
+# Back Alive Barbershop - robots.txt
+# https://backalivebarbershop.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://backalivebarbershop.com/sitemap.xml
+
+# Crawl-delay for politeness (optional)
+Crawl-delay: 1
+
+# Block unnecessary files
+Disallow: /vite.svg
+Disallow: /*.backup$

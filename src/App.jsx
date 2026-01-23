@@ -271,7 +271,7 @@ function About() {
             className="about-image"
           >
             <div className="about-image-wrapper">
-              <img src="/images/citywalk/interior2.jpg" alt="Back Alive Interior" />
+              <img src="/images/citywalk/interior2.jpg" alt="Back Alive Barbershop Interior - Premium grooming space in Dubai City Walk" loading="lazy" />
               <div className="about-image-overlay" />
             </div>
             <div className="about-image-accent" />
@@ -404,7 +404,7 @@ function Locations() {
               className="location-card"
             >
               <div className="location-image">
-                <img src={location.image} alt={location.name} />
+                <img src={location.image} alt={`${location.name} - Back Alive Barbershop Dubai location`} loading="lazy" />
                 <div className="location-overlay" />
               </div>
               <div className="location-content">
@@ -480,7 +480,7 @@ function Gallery() {
               transition={{ delay: i * 0.1 }}
               className="gallery-item"
             >
-              <img src={image.src} alt={image.alt} />
+              <img src={image.src} alt={image.alt} loading="lazy" />
               <div className="gallery-overlay" />
             </motion.div>
           ))}
