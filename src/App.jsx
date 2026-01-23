@@ -9,8 +9,17 @@ function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
+    let ticking = false
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -89,9 +98,10 @@ function Navigation() {
 
 // Hero Section
 function Hero() {
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 500], [0, 150])
-  const opacity = useTransform(scrollY, [0, 300], [1, 0])
+  const { scrollYProgress } = useScroll()
+  // Reduced parallax intensity for smoother performance
+  const y = useTransform(scrollYProgress, [0, 0.3], [0, 80])
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
   return (
     <section className="hero">
@@ -111,25 +121,15 @@ function Hero() {
 
         <div className="hero-gradient" />
         <div className="hero-grid" />
-        <motion.div
-          className="hero-glow hero-glow-1"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div
-          className="hero-glow hero-glow-2"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{ duration: 5, repeat: Infinity }}
-        />
+        {/* Glow effects now use CSS animations for better performance */}
+        <div className="hero-glow hero-glow-1" />
+        <div className="hero-glow hero-glow-2" />
       </div>
 
-      <motion.div className="hero-content" style={{ y, opacity }}>
+      <motion.div
+        className="hero-content"
+        style={{ y, opacity, willChange: 'transform, opacity' }}
+      >
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
