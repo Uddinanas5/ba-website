@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YG BLENDZ | TEST SITE - Anas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark: #111111;
+            --gray: #1a1a1a;
+            --gold: #d4af37;
+            --gold-light: #f0d878;
+            --silver: #c0c0c0;
+            --white: #ffffff;
+            --cream: #f5f2ec;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ========= NAVBAR ========= */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 4rem;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 4rem;
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '✦';
+            position: absolute;
+            right: -1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.6rem;
+            color: var(--gold);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--black);
+            padding: 0.8rem 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* ========= HERO ========= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(0, 0, 0, 0.8) 0%, transparent 50%),
+                var(--black);
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        h1 .gold {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--silver);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        .hero-location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--silver);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.8s;
+            opacity: 0;
+        }
+
+        .hero-location::before {
+            content: '📍';
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--black);
+            padding: 1.2rem 3rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-rating {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 100px;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1.2s;
+            opacity: 0;
+        }
+
+        .stars {
+            color: var(--gold);
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .rating-text {
+            font-size: 0.8rem;
+            color: var(--silver);
+        }
+
+        .rating-text strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ========= SERVICES ========= */
+        .services {
+            padding: 8rem 4rem;
+            background: var(--dark);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-tag::before,
+        .section-tag::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .section-tag::before {
+            right: calc(100% + 1rem);
+        }
+
+        .section-tag::after {
+            left: calc(100% + 1rem);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--silver);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--gray);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+        }
+
+        .service-card.featured {
+            background: linear-gradient(135deg, var(--gray) 0%, rgba(212, 175, 55, 0.08) 100%);
+            border-color: rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .crown-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .service-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .service-duration {
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .service-desc {
+            font-size: 0.95rem;
+            color: var(--silver);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            font-size: 0.85rem;
+            color: var(--silver);
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-features li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 0.7rem;
+        }
+
+        .service-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--silver);
+        }
+
+        .service-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .service-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .service-card.featured .service-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--black);
+            border: none;
+        }
+
+        /* ========= EXPERIENCE ========= */
+        .experience {
+            padding: 8rem 4rem;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .experience-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .experience-content h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-content p {
+            font-size: 1.1rem;
+            color: var(--silver);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-top: 0.5rem;
+        }
+
+        .experience-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .razor-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .razor-icon::before {
+            content: '✂';
+            font-size: 15rem;
+            background: linear-gradient(135deg, var(--gold) 0%, transparent 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.15;
+            transform: rotate(-15deg);
+        }
+
+        .experience-cards {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .xp-card {
+            background: var(--gray);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 3px solid var(--gold);
+            backdrop-filter: blur(10px);
+            animation: slideInRight 1s ease forwards;
+            opacity: 0;
+        }
+
+        .xp-card:nth-child(1) { animation-delay: 0.2s; }
+        .xp-card:nth-child(2) { animation-delay: 0.4s; }
+        .xp-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .xp-card h4 {
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .xp-card p {
+            font-size: 0.95rem;
+            color: var(--silver);
+        }
+
+        /* ========= LOCATION ========= */
+        .location {
+            padding: 8rem 4rem;
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .location-details {
+            background: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .location-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .location-address {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-city {
+            font-size: 1rem;
+            color: var(--silver);
+            margin-bottom: 2rem;
+        }
+
+        .location-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .loc-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--silver);
+        }
+
+        .loc-feature::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .directions-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 100px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .directions-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* ========= FOOTER ========= */
+        footer {
+            padding: 4rem;
+            background: var(--black);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: var(--silver);
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ========= TEST BANNER ========= */
+        .test-banner {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--gold);
+            color: var(--black);
+            padding: 0.75rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 10px;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+            animation: slideInUp 0.8s ease forwards;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========= RESPONSIVE ========= */
+        @media (max-width: 1024px) {
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-visual {
+                order: -1;
+                height: 400px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 2rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .services {
+                padding: 4rem 2rem;
+            }
+
+            .experience {
+                padding: 4rem 2rem;
+            }
+
+            .experience-grid {
+                gap: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .location {
+                padding: 4rem 2rem;
+            }
+
+            .hero-rating {
+                bottom: 1.5rem;
+                padding: 0.75rem 1.5rem;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Banner -->
+    <div class="test-banner">🧪 Kimi Test Website - Anas</div>
+
+    <nav id="navbar">
+        <div class="logo">YG BLENDZ</div>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#location">Location</a></li>
+        </ul>
+        <a href="#" class="book-btn">Demo Book</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Kimi Demo</div>
+            <h1>
+                <span>Precision</span>
+                <span class="gold">Meets Style</span>
+            </h1>
+            <p class="hero-subtitle">Test Website by Kimi</p>
+            <p class="hero-location">Demo Studio, Dubai UAE</p>
+            <div class="hero-cta">
+                <a href="#" class="cta-primary">Demo Book</a>
+                <a href="#services" class="cta-secondary">View Services</a>
+            </div>
+        </div>
+        <div class="hero-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-text"><strong>Demo</strong> Site</span>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="section-header reveal">
+            <span class="section-tag">Services</span>
+            <h2>The Royal Experience</h2>
+            <p class="section-desc">Premium grooming services tailored to elevate your style.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card featured reveal">
+                <span class="crown-badge">👑</span>
+                <h3 class="service-name">Gold King Service</h3>
+                <span class="service-duration">1 hour 15 mins</span>
+                <p class="service-desc">The ultimate luxury grooming experience. Our crown jewel treatment.</p>
+                <ul class="service-features">
+                    <li>Signature Haircut</li>
+                    <li>Precision Beard Work</li>
+                    <li>Eyebrow Shaping</li>
+                    <li>Hot Towel Treatment</li>
+                    <li>Steam Facial</li>
+                    <li>Premium Products</li>
+                </ul>
+                <div class="service-price">$100 <span>/ session</span></div>
+                <a href="#" class="service-btn">Demo Booking</a>
+            </div>
+
+            <div class="service-card reveal">
+                <h3 class="service-name">Silver Experience</h3>
+                <span class="service-duration">45 mins</span>
+                <p class="service-desc">Classic sophistication. A refined grooming session.</p>
+                <ul class="service-features">
+                    <li>Premium Haircut</li>
+                    <li>Beard Trim & Line Up</li>
+                    <li>Straight Razor Finish</li>
+                    <li>Hot Towel Treatment</li>
+                    <li>Hair Wash</li>
+                </ul>
+                <div class="service-price">$65 <span>/ session</span></div>
+                <a href="#" class="service-btn">Demo Booking</a>
+            </div>
+
+            <div class="service-card reveal">
+                <h3 class="service-name">Signature Cut</h3>
+                <span class="service-duration">35 mins</span>
+                <p class="service-desc">Our essential service. Clean, sharp, tailored to your style.</p>
+                <ul class="service-features">
+                    <li>Classic Haircut</li>
+                    <li>Straight Razor Edge Up</li>
+                    <li>Hair Wash</li>
+                    <li>Custom Styling</li>
+                </ul>
+                <div class="service-price">$60 <span>/ session</span></div>
+                <a href="#" class="service-btn">Demo Booking</a>
+            </div>
+
+            <div class="service-card reveal">
+                <h3 class="service-name">Beard Sculpting</h3>
+                <span class="service-duration">20 mins</span>
+                <p class="service-desc">Precision beard artistry. Sculpted to perfection.</p>
+                <ul class="service-features">
+                    <li>Beard Trim or Fade</li>
+                    <li>Straight Razor Polish</li>
+                    <li>Clean Line Work</li>
+                </ul>
+                <div class="service-price">$40 <span>/ session</span></div>
+                <a href="#" class="service-btn">Demo Booking</a>
+            </div>
+
+            <div class="service-card reveal">
+                <h3 class="service-name">Wedding Package</h3>
+                <span class="service-duration">1.5+ hours</span>
+                <p class="service-desc">Your big day deserves perfection. Custom bridal party package.</p>
+                <ul class="service-features">
+                    <li>Full Grooming Suite</li>
+                    <li>Multiple Gentlemen</li>
+                    <li>On-location Available</li>
+                </ul>
+                <div class="service-price">$150+ <span>/ package</span></div>
+                <a href="#" class="service-btn">Demo Inquiry</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience" id="experience">
+        <div class="experience-grid">
+            <div class="experience-content reveal">
+                <span class="section-tag" style="text-align: left; margin-bottom: 1rem;">The Difference</span>
+                <h2>Craft Meets Artistry</h2>
+                <p>Every cut is a canvas. Every fade is a masterpiece. At YG BLENDZ, we architect confidence.</p>
+                <p>With years of professional experience, we've transformed the mundane act of a haircut into a ritual of self-care and refinement.</p>
+                <p>Each session begins with understanding your vision and ends with you walking out as the best version of yourself.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Clients Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Dubai Locations</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-visual">
+                <div class="razor-icon"></div>
+                <div class="experience-cards">
+                    <div class="xp-card">
+                        <h4>🔥 Hot Towel Ritual</h4>
+                        <p>Relax with steam-infused towels that open pores and prepare your skin for the perfect shave.</p>
+                    </div>
+                    <div class="xp-card">
+                        <h4>⚡ Straight Razor Precision</h4>
+                        <p>Classic barber techniques for the cleanest lines and smoothest finish you've ever felt.</p>
+                    </div>
+                    <div class="xp-card">
+                        <h4>✨ Premium Products</h4>
+                        <p>Only the finest grooming products — from black & gold masks to beard oils that nourish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="location" id="location">
+        <div class="section-header reveal">
+            <span class="section-tag">Visit Us</span>
+            <h2>Find Your Crown</h2>
+            <p class="section-desc">Private studio experience in the heart of Dubai</p>
+        </div>
+
+        <div class="location-details reveal">
+            <div class="location-icon">📍</div>
+            <div class="location-address">Demo Studio, Dubai UAE</div>
+            <div class="location-city">Backalive Barbershop - Dubai</div>
+            
+            <div class="location-features">
+                <span class="loc-feature">Private Studio</span>
+                <span class="loc-feature">By Appointment</span>
+                <span class="loc-feature">Premium Amenities</span>
+                <span class="loc-feature">Valet Parking</span>
+            </div>
+            
+            <a href="#" class="directions-btn">Get Directions</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">YG BLENDZ</div>
+        <p class="footer-tagline">Test website created by Kimi for Anas.</p>
+        <div class="social-links">
+            <a href="#" class="social-link" title="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="#" class="social-link" title="TikTok">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-.1z"/></svg>
+            </a>
+        </div>
+        <p class="footer-bottom">© 2026 YG BLENDZ. Test Site by Kimi for Anas.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
