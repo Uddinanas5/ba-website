@@ -552,6 +552,7 @@ function Footer() {
               <a href="#services">Services</a>
               <a href="#locations">Locations</a>
               <a href="#gallery">Gallery</a>
+              <a href="/privacy.html">Privacy Policy</a>
             </div>
             <div className="footer-col">
               <h4>Locations</h4>
